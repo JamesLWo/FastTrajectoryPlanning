@@ -1,9 +1,9 @@
 import numpy as np 
+import random 
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (50,50))
 knowledgeMaze = np.zeros(shape = (50,50))
-
 #populate actual maze
 for x in np.nditer(trueMaze):
     randNum = random.randint(1,101)
@@ -11,9 +11,8 @@ for x in np.nditer(trueMaze):
         x = 1
     else:
         x = 0 
-
-trueMaze[0,0] = S 
-trueMaze[49,49] = G 
+trueMaze[0,0] = 'S' 
+trueMaze[49,49] = 'G' 
 
 print(trueMaze)
 
