@@ -1,5 +1,6 @@
 import numpy as np 
 import random 
+import heapq
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (50,50))
