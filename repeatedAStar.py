@@ -1,5 +1,9 @@
+import forwardAStar
+
+
 def repeatedAStar(maze, beginningCoordinates, endingCoordinates):
-    
+    while(true):
+        
     
     
     

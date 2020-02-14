@@ -25,5 +25,3 @@ path = repeatedAStar.repeatedAStar(knowledgeMaze, (0,0), (49,49))
 path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
 path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
 
-#for loop of
-#planning and executing
