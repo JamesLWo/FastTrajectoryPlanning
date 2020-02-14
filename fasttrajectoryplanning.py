@@ -1,4 +1,7 @@
 import numpy as np 
+import repeatedAStar
+import repeatedBackwardsAStar
+import adaptiveAStar
 import random 
 np.set_printoptions(threshold=np.inf)
 
@@ -19,13 +22,9 @@ np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 print(trueMaze)
 
 
-def repeatedAStar(maze, beginningCoordinates, endingCoordinates):
-    plannedPath = []
+path = repeatedAStar.repeatedAStar(knowledgeMaze, (0,0), (49,49)) 
+path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
+path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
 
-
-    return plannedPath
-
-
-def repeatedBackwardsAStar(maze, beginningCoordinates, endingCoordinates):
-    plannedPath = []
-    return plannedPath
+#for loop of
+#planning and executing
