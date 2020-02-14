@@ -22,7 +22,7 @@ print(trueMaze)
 
 def repeatedAStar(maze, beginningCoordinates, endingCoordinates):
     plannedPath = []
-    
+
 
     return plannedPath
 
