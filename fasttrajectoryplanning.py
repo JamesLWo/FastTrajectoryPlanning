@@ -11,8 +11,8 @@ for x in np.nditer(trueMaze, op_flags=['readwrite']):
         x[...] = 1
     else:
         x[...] = 0
-trueMaze[0,0] = 1
-trueMaze[49,49] = 2
+trueMaze[0,0] = 3
+trueMaze[49,49] = 4
 
 np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 
