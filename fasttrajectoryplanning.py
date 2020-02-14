@@ -7,13 +7,12 @@ trueMaze = np.zeros(shape = (50,50)).astype(int)
 knowledgeMaze = np.zeros(shape = (50,50)).astype(int)
 #populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
-    randNum = random.randint(1,101)
-    if randNum >= 1 and randNum <= 30:
-        x = 1
+    if random.random() >= 0.7:
+        x[...] = 1
     else:
-        x = 0
-trueMaze[0,0] = 1
-trueMaze[49,49] = 2
+        x[...] = 0
+trueMaze[0,0] = 3
+trueMaze[49,49] = 4
 
 np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 
