@@ -3,14 +3,65 @@ import heapq
 def forwardAStar(maze, beginningCoordinates, endingCoordinates):
     openList = [] #heap
     closedList = []
-    hValue = (endingCoordinates[0] - beginningCoordinates[0]) + (endingCoordinates[1] - beginningCoordinates[1])
-    beginningNode = Node(beginningCoordinates, None, 0, hValue)
+    beginningNode = Node(beginningCoordinates, None, 0, getManhattanDistance(beginningCoordinates, endingCoordinates))
     openList.append(beginningNode)
 
-    while()
+    while openList[0].coordinates != endingCoordinates:
+        poppedNode = heapq.heappop(openList)
+        closedList.append(poppedNode)
+        #expand the popped node
+        potentialCoordinates = []
+        potentialCoordinates.append(generateLeftCoordinates(poppedNode.coordinates))
+        potentialCoordinates.append(generateRightCoordinates(poppedNode.coordinates))
+        potentialCoordinates.append(generateUpCoordinates(poppedNode.coordinates))
+        potentialCoordinates.append(generateDownCoordinates(poppedNode.coordinates))
+        for coordinate in potentialCoordinates:
+            if isValidCoordinate(coordinate):
+                #if the neighbor has valid coordinates and is not in closed list or in the open list, add that node in the open list
+                if not(inClosed(coordinate, closedList)) and inOpen(coordinate, openList) == -1:
+                    heapq.heappush(openList, Node(coordinate, poppedNode, poppedNode.gvalue + 1, getManhattanDistance(coordinate, endingCoordinates)))
+                #if the neighbor has valid cooridnates and is not in clased list but is in open list
+                elif not(inClosed(coordinate, closedList)) and inOpen(coordinate, openList) != -1:
+                    #check if current distance can be improved
+                    if openList[inOpen(coordinate, openList)].fvalue > (poppedNode.gavlue + 1 + getManhattanDistance(coordinate, endingCoordinates)):
+                        openList[inOpen(coordinate, openList)].fvalue = poppedNode.gvalue + 1 + getManhattanDistance(coordinate, endingCoordinates)
+
+    
+
+                    
+
+
+
+
 
 
     plannedPath = []
 
 
     return plannedPath
+def generateLeftCoordinates(currentCoordinates):
+    return (currentCoordinates[0]-1, currentCoordinates[1])
+def generateRightCoordinates(currentCoordinates):
+    return (currentCoordinates[0]+1, currentCoordinates[1])
+def generateUpCoordinates(currentCoordinates):
+    return (currentCoordinates[0], currentCoordinates[1]+1)
+def generateDownCoordinates(currentCoordinates):
+    return (currentCoordinates[0], currentCoordinates[1]-1)
+
+def getManhattanDistance(currentCoordinates, endingCoordinates):
+    return (endingCoordinates[0] - currentCoordinates[0]) + (endingCoordinates[1] - currentCoordinates[1])
+
+def isValidCoordinate(currentCoordinates):
+    return 0<=currentCoordinates[0]<=49 and 0<=currentCoordinates[1]<=49
+def inClosed(currentCoordinates, closedList):
+    for node in closedList:
+        if node.coordinates == currentCoordinates:
+            return False
+
+    return True
+def inOpen(currentCoordinates, openList):
+    for index, w in enumerate(openList):
+        if w.coordinates == currentCoordinates:
+            return index
+
+    return -1
