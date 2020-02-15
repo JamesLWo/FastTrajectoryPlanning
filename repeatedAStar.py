@@ -1,12 +1,15 @@
 import forwardAStar
 
-
 def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates):
     plannedPaths = []
+    knowledgeMazes = []
+    
+    currentKnowledgeMaze = knowledgeMaze
     beginning = beginningCoordinates
     ending = endingCoordinates
-    while(true):
+    while True:
         #planning
+        knowledgeMazes.append(currentKnowledgeMaze)
         currentPath = forwardAStar.forwardAStar(knowledgeMaze, beginning, ending)
         plannedPaths.append(currentPath)
         #execute
@@ -21,5 +24,3 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
     
     
     
-    plannedPaths = []
-    knowledgeMazes = []

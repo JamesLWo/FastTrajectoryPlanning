@@ -7,7 +7,8 @@ class Node:
         self.fvalue = self.gvalue + self.hvalue
 
 
-    
+    def __lt__(self, other):
+        return self.fvalue < other.fvalue
 
 
         
