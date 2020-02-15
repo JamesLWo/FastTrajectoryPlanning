@@ -1,7 +1,6 @@
 class Node:
-    def __init__(self, x, y, parent, gvalue, hvalue):
-        self.x = x
-        self.y = y
+    def __init__(self, coordinates, parent, gvalue, hvalue):
+        self.coordinates = coordinates
         self.parent = parent
         self.gvalue = gvalue
         self.hvalue = hvalue
