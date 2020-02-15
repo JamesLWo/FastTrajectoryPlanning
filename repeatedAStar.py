@@ -3,7 +3,7 @@ import forwardAStar
 def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates):
     plannedPaths = []
     knowledgeMazes = []
-    
+
     currentKnowledgeMaze = knowledgeMaze
     beginning = beginningCoordinates
     ending = endingCoordinates
