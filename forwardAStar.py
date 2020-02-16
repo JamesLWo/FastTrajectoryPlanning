@@ -26,18 +26,12 @@ def forwardAStar(maze, beginningCoordinates, endingCoordinates):
                     if openList[inOpen(coordinate, openList)].fvalue > (poppedNode.gavlue + 1 + getManhattanDistance(coordinate, endingCoordinates)):
                         openList[inOpen(coordinate, openList)].fvalue = poppedNode.gvalue + 1 + getManhattanDistance(coordinate, endingCoordinates)
 
-    
-
-                    
-
-
-
-
-
-
     plannedPath = []
-
-
+    goalNode = heapq.heappop(openList)
+    currentNode = goalNode
+    while currentNode !=  None:
+        plannedPath.insert(currentNode, 0)
+        currentNode = currentNode.parent
     return plannedPath
 def generateLeftCoordinates(currentCoordinates):
     return (currentCoordinates[0]-1, currentCoordinates[1])
