@@ -1,5 +1,6 @@
 from Node import Node
 import heapq
+import math
 def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid):
     openList = [] #heap
     closedList = []
@@ -51,7 +52,7 @@ def generateDownCoordinates(currentCoordinates):
     return (currentCoordinates[0], currentCoordinates[1]-1)
 
 def getManhattanDistance(currentCoordinates, endingCoordinates):
-    return (endingCoordinates[0] - currentCoordinates[0]) + (endingCoordinates[1] - currentCoordinates[1])
+    return abs(endingCoordinates[0] - currentCoordinates[0]) + abs(endingCoordinates[1] - currentCoordinates[1])
 
 def isValidCoordinate(currentCoordinates, maze, sizeOfGrid):
     return 0<=currentCoordinates[0]<=sizeOfGrid-1 and 0<=currentCoordinates[1]<=sizeOfGrid-1 and maze[currentCoordinates[0]][currentCoordinates[1]] != 1
