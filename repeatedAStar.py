@@ -12,6 +12,8 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         knowledgeMazes.append(currentKnowledgeMaze)
         currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid)
         plannedPaths.append(currentPath)
+        if currentPath == []:
+            return [plannedPaths, knowledgeMazes]
         #execute
         #step through planned path
         #if current node is actually an obstacle, stop there and save that coordinate as the beginning coordinate for next iteration
@@ -20,11 +22,11 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         currentKnowledgeMaze = np.copy(knowledgeMazes[-1])
 
         for index, w in enumerate(currentPath):
-            if trueMaze[w.coordinates[0]][w.coordinates[1]] == 1:
+            if trueMaze[w[0]][w[1]] == 1:
                 #update beginning to coordinates right before obstacle bump
-                beginning = currentPath[index-1].coordinates
+                beginning = currentPath[index-1]
                 break
-            if w.coordinates == endingCoordinates: #if the path executed actually makes it to the end, we're done
+            if w == endingCoordinates: #if the path executed actually makes it to the end, we're done
                 return [plannedPaths,knowledgeMazes]
             neighbors = [] #generate all neighbors
             currentCoordinate = currentPath[index].coordinates
