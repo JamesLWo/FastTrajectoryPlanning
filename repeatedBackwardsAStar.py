@@ -15,40 +15,29 @@ def repeatedBackwardsAStar(maze , start, end):
 
     openList.append(cursor)
 
-    while(openList):
+    while(cursor.coordinates != end):
         cursor = heapq.heappop(openList)
         neighbors = get_neighbors(maze, cursor.coordinates[0], cursor.coordinates[1])
+        closedList.append(cursor)
 
         for neighbor in neighbors:
-            if(neighbor.coordinates == end):
-                break
-            
+            if neighbor not in closedList and neighbor not in openList:
+                newNode = Node.Node(neighbor, cursor, cursor.gvalue + 1, heuristic(neighbor, end))
+                heapq.heappush(openList, newNode)
+            elif neighbor not in closedList and neighbor in openList:
+                current_node = get_node(openList, neighbor) 
 
+                if current_node.fvalue > cursor.gvalue + 1 + heuristic(neighbor, end):
+                    current_node.gvalue = cursor.gvalue + 1
+                    current_node.hvalue = heuristic(neighbor, end)
+                    current_node.fvalue = current_node.gvalue + current_node.hvalue
+                    current_node.parent = cursor
 
+        print(len(openList))
+        if len(openList) == 0:
+            return []
 
-    # while(cursor.coordinates != end):
-    #     cursor = heapq.heappop(openList)
-    #     neighbors = get_neighbors(maze, cursor.coordinates[0], cursor.coordinates[1])
-    #     closedList.append(cursor)
-
-    #     for neighbor in neighbors:
-    #         if neighbor not in closedList and neighbor not in openList:
-    #             newNode = Node.Node(neighbor, cursor, cursor.gvalue + 1, heuristic(neighbor, end))
-    #             heapq.heappush(openList, newNode)
-    #         elif neighbor not in closedList and neighbor in openList:
-    #             current_node = get_node(openList, neighbor) 
-
-    #             if current_node.fvalue > cursor.gvalue + 1 + heuristic(neighbor, end):
-    #                 current_node.gvalue = cursor.gvalue + 1
-    #                 current_node.hvalue = heuristic(neighbor, end)
-    #                 current_node.fvalue = current_node.gvalue + current_node.hvalue
-    #                 current_node.parent = cursor
-
-    #     print(len(openList))
-    #     if len(openList) < 1 or len(openList) > 30:
-    #         return []
-
-    #     cursor = openList[0]
+        cursor = openList[0]
 
 
     return backtrack(heapq.heappop(openList))
@@ -77,7 +66,7 @@ def get_neighbors(maze, x, y):
     return neighbors
 
 def valid_neighbor(maze, x, y):
-    return (x >= 0 and x < maze.shape[0] and y >= 0 and y < maze.shape[1])
+    return (x >= 0 and x < maze.shape[0] and y >= 0 and y < maze.shape[1]) and maze[x,y] != 1
 
 
 def get_node(openList, coordinate):
@@ -90,7 +79,7 @@ if __name__ == "__main__":
     maze = np.zeros(shape = (10,10)).astype(int)
     unknown = np.zeros(shape = (10,10)).astype(int)
     for x in np.nditer(maze, op_flags=['readwrite']):
-        if random.random() >= 0.5:
+        if random.random() >= 0.8:
             x[...] = 1
         else:
             x[...] = 0
@@ -109,12 +98,18 @@ if __name__ == "__main__":
     plannedPath = repeatedBackwardsAStar(maze, (9, 9), (0,0))
 
     print(plannedPath)
-    
+
+    img = plt.imshow(maze)
+    plt.savefig("reg.jpg")
+    plt.show()
+
+
     for coordinate in plannedPath:
         maze[coordinate[0], coordinate[1]] = 5
     
+    img2 = plt.imshow(maze)
+    plt.savefig("path.jpg")
+    plt.show()
 
-    # plt.imshow(maze)
-    # plt.show()
 
     print(maze)
