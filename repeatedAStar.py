@@ -1,6 +1,6 @@
 import forwardAStar
 
-def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates):
+def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates, sizeOfGrid):
     #plannedPaths = []
     #knowledgeMazes = []
 
@@ -17,7 +17,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         #if fails, update beginning coordinates
         #call a star again with updated values
         #if finishes, break
-    return forwardAStar.forwardAStar(knowledgeMaze, beginningCoordinates, endingCoordinates)
+    return forwardAStar.forwardAStar(knowledgeMaze, beginningCoordinates, endingCoordinates, sizeOfGrid)
 
 
 
