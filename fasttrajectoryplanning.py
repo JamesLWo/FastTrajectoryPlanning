@@ -1,8 +1,10 @@
 import numpy as np 
-import repeatedAStar
-import repeatedBackwardsAStar
-import adaptiveAStar
+# import repeatedAStar
+# import repeatedBackwardsAStar
+# import adaptiveAStar
 import random 
+import matplotlib.pyplot as plt
+
 np.set_printoptions(threshold=np.inf)
 
 #create actual maze and knowledge maze
@@ -21,9 +23,12 @@ knowledgeMaze[49,49] = 4
 
 np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 
+plt.imshow(trueMaze)
+plt.show()
+
 print(trueMaze)
 
-path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (49,49)) 
-path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
-path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
+# path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (49,49)) 
+# path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
+# path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
 
