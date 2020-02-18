@@ -11,6 +11,8 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         #planning
         knowledgeMazes.append(currentKnowledgeMaze)
         currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid)
+        print("current path")
+        print(currentPath)
         plannedPaths.append(currentPath)
         if currentPath == []:
             return [plannedPaths, knowledgeMazes]
@@ -29,7 +31,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
             if w == endingCoordinates: #if the path executed actually makes it to the end, we're done
                 return [plannedPaths,knowledgeMazes]
             neighbors = [] #generate all neighbors
-            currentCoordinate = currentPath[index].coordinates
+            currentCoordinate = currentPath[index]
             neighbors.append(generateLeftCoordinates(currentCoordinate))
             neighbors.append(generateRightCoordinates(currentCoordinate))
             neighbors.append(generateUpCoordinates(currentCoordinate))
@@ -37,9 +39,9 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
             #check if each neighbor is valid and is an obstacle --> if it is, update the knowledge maze
             for neighbor in neighbors:
                 if isValidCoordinate(neighbor, sizeOfGrid) and trueMaze[neighbor[0]][neighbor[1]] == 1:
-                    currentKnowledgeMaze[neighbor[0]][neighbor[1]]
+                    currentKnowledgeMaze[neighbor[0]][neighbor[1]] = 1 #without assigning 1, it is an infinite loop?
+            
 
-    return []
 
 
 def generateLeftCoordinates(currentCoordinates):

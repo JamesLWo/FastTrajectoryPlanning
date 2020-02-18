@@ -41,6 +41,7 @@ def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid):
         plannedPath.append(currentNode.coordinates)
         currentNode = currentNode.parent
     #return planned path
+    plannedPath.reverse()
     return plannedPath
 def generateLeftCoordinates(currentCoordinates):
     return (currentCoordinates[0]-1, currentCoordinates[1])

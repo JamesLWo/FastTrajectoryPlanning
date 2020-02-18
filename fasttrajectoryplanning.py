@@ -1,7 +1,7 @@
 import numpy as np 
-# import repeatedAStar
-# import repeatedBackwardsAStar
-# import adaptiveAStar
+import repeatedAStar
+import repeatedBackwardsAStar
+import adaptiveAStar
 import random 
 import matplotlib.pyplot as plt
 
@@ -38,8 +38,8 @@ print("answer: ")
 print(path)
 #path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
 #path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
-plt.imshow(trueMaze)
-plt.show()
+#plt.imshow(trueMaze)
+#lt.show()
 
 print(trueMaze)
 
