@@ -41,7 +41,6 @@ print(path)
 #plt.imshow(trueMaze)
 #lt.show()
 
-print(trueMaze)
 
 # path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (49,49)) 
 # path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
