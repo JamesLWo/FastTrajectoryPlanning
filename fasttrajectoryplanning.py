@@ -1,22 +1,22 @@
-import numpy as np 
+import numpy as np
+import random
 import repeatedAStar
-import repeatedBackwardsAStar
+# import repeatedBackwardsAStar
 import adaptiveAStar
-import random 
 import matplotlib.pyplot as plt
 from matplotlib import colors
-
 
 np.set_printoptions(threshold=np.inf)
 
 # PARAMETERS ######
-sizeOfGrid = 10
+size = 10
 probability = 0.7
+method = "forwards"
 ###################
 
 #create actual maze and knowledge maze
-trueMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
-knowledgeMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
+trueMaze = np.zeros(shape = (size,size)).astype(int)
+knowledgeMaze = np.zeros(shape = (size,size)).astype(int)
 
 #populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
@@ -27,9 +27,10 @@ for x in np.nditer(trueMaze, op_flags=['readwrite']):
 
 # set start and end points
 trueMaze[0,0] = 3
-trueMaze[sizeOfGrid-1,sizeOfGrid-1] = 4
+trueMaze[size-1,size-1] = 4
 knowledgeMaze[0,0] = 3
-knowledgeMaze[sizeOfGrid-1,sizeOfGrid-1] = 4
+knowledgeMaze[size-1,size-1] = 4
+
 
 # OPTIONAL EDGE CASES
 
@@ -38,7 +39,7 @@ knowledgeMaze[sizeOfGrid-1,sizeOfGrid-1] = 4
 # trueMaze[1,0] = 1
 
 
-#give knowledge maze initial knowledge
+# give knowledge maze initial knowledge
 if trueMaze[1,0] == 1:
     knowledgeMaze[1,0] = 1
 if trueMaze[0,1] == 1:
@@ -52,31 +53,15 @@ print(trueMaze)
 
 ########## TESTING ##################
 
-# forwards
-path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (sizeOfGrid-1,sizeOfGrid-1), sizeOfGrid) 
-
-
-# backwards
-# path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (sizeOfGrid-1, sizeOfGrid-1), (0,0), sizeOfGrid)
-
+if(method == "forwards"):
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size) 
+elif(method == "backwards"):
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size)
+elif(method == "adaptive"):
+    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1))
+else:
+    print("invalid option")
 
 
 print("answer: ")
-
-# if path[0] == [[]]:
-#     print("no path")
-# else:
-#     print(path)
-
 print(path)
-#path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
-#path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
-
-cmap = colors.ListedColormap(['white', 'black', 'yellow', 'red', 'green'])
-bounds=[0,1,2,3,4,5]
-norm = colors.BoundaryNorm(bounds, cmap.N)
-
-plt.imshow(trueMaze, cmap=cmap, norm=norm)
-plt.show()
-
-print(trueMaze)

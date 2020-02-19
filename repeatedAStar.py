@@ -3,6 +3,7 @@ import numpy as np
 def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates, sizeOfGrid):
     plannedPaths = []
     knowledgeMazes = []
+    numberOfExpandedNodes = 0
 
     currentKnowledgeMaze = knowledgeMaze
     beginning = beginningCoordinates
@@ -10,7 +11,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
     while True:
         #planning
         knowledgeMazes.append(currentKnowledgeMaze)
-        currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid)
+        currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, numberOfExpandedNodes)
         print("current path")
         print(currentPath)
         plannedPaths.append(currentPath)
