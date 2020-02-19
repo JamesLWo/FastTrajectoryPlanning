@@ -4,6 +4,7 @@ import random
 import heapq
 import Node
 import matplotlib.pyplot as plt
+from matplotlib import colors
 
 
 def repeatedBackwardsAStar(maze , start, end):
@@ -27,7 +28,7 @@ def repeatedBackwardsAStar(maze , start, end):
             elif neighbor not in closedList and neighbor in openList:
                 current_node = get_node(openList, neighbor) 
 
-                if current_node.fvalue > cursor.gvalue + 1 + heuristic(neighbor, end):
+                if current_node.fvalue > (cursor.gvalue + 1 + heuristic(neighbor, end)):
                     current_node.gvalue = cursor.gvalue + 1
                     current_node.hvalue = heuristic(neighbor, end)
                     current_node.fvalue = current_node.gvalue + current_node.hvalue
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     maze = np.zeros(shape = (10,10)).astype(int)
     unknown = np.zeros(shape = (10,10)).astype(int)
     for x in np.nditer(maze, op_flags=['readwrite']):
-        if random.random() >= 0.8:
+        if random.random() >= 0.7:
             x[...] = 1
         else:
             x[...] = 0
@@ -99,7 +100,11 @@ if __name__ == "__main__":
 
     print(plannedPath)
 
-    img = plt.imshow(maze)
+    cmap = colors.ListedColormap(['white', 'black', 'yellow', 'red', 'green'])
+    bounds=[0,1,2,3,4,5]
+    norm = colors.BoundaryNorm(bounds, cmap.N)
+
+    img = plt.imshow(maze, cmap=cmap, norm=norm)
     plt.savefig("reg.jpg")
     plt.show()
 
@@ -107,7 +112,7 @@ if __name__ == "__main__":
     for coordinate in plannedPath:
         maze[coordinate[0], coordinate[1]] = 5
     
-    img2 = plt.imshow(maze)
+    img2 = plt.imshow(maze, cmap=cmap, norm = norm)
     plt.savefig("path.jpg")
     plt.show()
 
