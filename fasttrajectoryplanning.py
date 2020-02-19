@@ -9,7 +9,7 @@ from matplotlib import colors
 np.set_printoptions(threshold=np.inf)
 
 # PARAMETERS ######
-size = 10
+size = 101
 probability = 0.7
 method = "forwards"
 ###################
@@ -38,13 +38,6 @@ knowledgeMaze[size-1,size-1] = 4
 # trueMaze[0,1] = 1
 # trueMaze[1,0] = 1
 
-
-# give knowledge maze initial knowledge
-if trueMaze[1,0] == 1:
-    knowledgeMaze[1,0] = 1
-if trueMaze[0,1] == 1:
-    knowledgeMaze[0,1] = 1
-
 np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 
 print("true maze: ")
@@ -54,9 +47,20 @@ print(trueMaze)
 ########## TESTING ##################
 
 if(method == "forwards"):
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size) 
+    # give knowledge maze initial knowledge
+    if trueMaze[1,0] == 1:
+        knowledgeMaze[1,0] = 1
+    if trueMaze[0,1] == 1:
+        knowledgeMaze[0,1] = 1
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size)
+
 elif(method == "backwards"):
+    if trueMaze[size-2,size-1] == 1:
+        knowledgeMaze[size-2,size-1] = 1
+    if trueMaze[size-1,size-2] == 1:
+        knowledgeMaze[size-1,size-2] = 1
     path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size)
+
 elif(method == "adaptive"):
     path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1))
 else:
