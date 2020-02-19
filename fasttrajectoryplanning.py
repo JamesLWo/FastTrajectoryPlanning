@@ -15,7 +15,7 @@ trueMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
 knowledgeMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
 #populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
-    if random.random() >= 0.7:
+    if random.random() >= 1:
         x[...] = 1
     else:
         x[...] = 0
@@ -39,8 +39,8 @@ print("true maze: ")
 print(trueMaze)
 
 # path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (sizeOfGrid-1,sizeOfGrid-1), sizeOfGrid) 
-path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (sizeOfGrid-1, sizeOfGrid-1), (0,0), sizeOfGrid)
-print("answer: ")
+path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (sizeOfGrid-1,sizeOfGrid-1), sizeOfGrid)
+print("answer: ") 
 # if path[0] == [[]]:
 #     print("no path")
 # else:
@@ -50,12 +50,7 @@ print(path)
 #path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
 #path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
 
-cmap = colors.ListedColormap(['white', 'black', 'yellow', 'red', 'green'])
-bounds=[0,1,2,3,4,5]
-norm = colors.BoundaryNorm(bounds, cmap.N)
 
-plt.imshow(trueMaze, cmap=cmap, norm=norm)
-plt.show()
 
 
 # path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (49,49)) 

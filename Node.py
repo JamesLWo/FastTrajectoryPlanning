@@ -8,7 +8,8 @@ class Node:
 
 
     def __lt__(self, other):
-        return self.fvalue < other.fvalue
+        return self.fvalue < other.fvalue or (self.fvalue == other.fvalue and self.gvalue > other.gvalue)
+
 
 
         
