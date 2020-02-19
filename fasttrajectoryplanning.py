@@ -10,7 +10,7 @@ from matplotlib import colors
 np.set_printoptions(threshold=np.inf)
 
 # PARAMETERS ######
-sizeOfGrid = 10
+sizeOfGrid = 101
 probability = 0.7
 ###################
 
