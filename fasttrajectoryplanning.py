@@ -9,23 +9,34 @@ from matplotlib import colors
 
 np.set_printoptions(threshold=np.inf)
 
+# PARAMETERS ######
 sizeOfGrid = 10
+probability = 0.7
+###################
+
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
 knowledgeMaze = np.zeros(shape = (sizeOfGrid,sizeOfGrid)).astype(int)
+
 #populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
-    if random.random() >= 0.7:
+    if random.random() >= probability:
         x[...] = 1
     else:
         x[...] = 0
 
-# trueMaze[0,1] = 1
-# trueMaze[1,0] = 1
+# set start and end points
 trueMaze[0,0] = 3
 trueMaze[sizeOfGrid-1,sizeOfGrid-1] = 4
 knowledgeMaze[0,0] = 3
 knowledgeMaze[sizeOfGrid-1,sizeOfGrid-1] = 4
+
+# OPTIONAL EDGE CASES
+
+# block corner - backwards
+# trueMaze[0,1] = 1
+# trueMaze[1,0] = 1
+
 
 #give knowledge maze initial knowledge
 if trueMaze[1,0] == 1:
@@ -38,9 +49,20 @@ np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
 print("true maze: ")
 print(trueMaze)
 
-# path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (sizeOfGrid-1,sizeOfGrid-1), sizeOfGrid) 
-path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (sizeOfGrid-1, sizeOfGrid-1), (0,0), sizeOfGrid)
+
+########## TESTING ##################
+
+# forwards
+path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (sizeOfGrid-1,sizeOfGrid-1), sizeOfGrid) 
+
+
+# backwards
+# path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (sizeOfGrid-1, sizeOfGrid-1), (0,0), sizeOfGrid)
+
+
+
 print("answer: ")
+
 # if path[0] == [[]]:
 #     print("no path")
 # else:
@@ -58,8 +80,3 @@ plt.imshow(trueMaze, cmap=cmap, norm=norm)
 plt.show()
 
 print(trueMaze)
-
-# path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (49,49)) 
-# path2 = repeatedBackwardsAStar.repeatedBackwardsAStar(knowledgeMaze, (0,0), (49,40))
-# path3 = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (49,49))
-
