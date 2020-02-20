@@ -5,6 +5,7 @@ import repeatedAStar
 import adaptiveAStar
 import matplotlib.pyplot as plt
 from matplotlib import colors
+import pandas as pd
 
 
 def tracePath(maze, path):
@@ -14,7 +15,7 @@ def tracePath(maze, path):
 
 
 #### CONFIGURATION ####
-random.seed(2)
+# random.seed(2)
 np.set_printoptions(threshold=np.inf)
 
 color_set = ['white', 'black', 'green', 'red', 'yellow']
@@ -26,7 +27,7 @@ norm = colors.BoundaryNorm(range_set, len(color_set))
 #### PARAMETERS #####
 size = 10
 probability = 0.7
-method = "forwards"
+method = "backwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
@@ -81,22 +82,18 @@ print(trueMaze)
 
 
 plt.imshow(trueMaze, cmap=cmap, norm=norm)
-plt.waitforbuttonpress(1)
-plt.close()
-
+plt.show()
 
 
 print("answer: ")
 print(path)
 
 plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
-plt.waitforbuttonpress(1)
-plt.close()
+plt.show()
 
 # DISPLAY PARTIAL PATHS
 for index, partial in enumerate(path[0]):
     pathMaze = tracePath(path[1][index], partial)
     plt.imshow(pathMaze, cmap=cmap, norm=norm)
-    plt.waitforbuttonpress(1)
-    plt.close()
+    plt.show()
 
