@@ -5,6 +5,7 @@ import repeatedAStar
 import adaptiveAStar
 import matplotlib.pyplot as plt
 from matplotlib import colors
+import os
 
 
 def tracePath(maze, path):
@@ -24,7 +25,7 @@ cmap = colors.ListedColormap(color_set)
 norm = colors.BoundaryNorm(range_set, len(color_set))
 
 #### PARAMETERS #####
-size = 10
+size = 101
 probability = 0.7
 method = "backwards"
 
@@ -32,7 +33,7 @@ method = "backwards"
 trueMaze = np.zeros(shape = (size,size)).astype(int)
 knowledgeMaze = np.zeros(shape = (size,size)).astype(int)
 
-#populate actual maze
+# populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
     if random.random() >= probability:
         x[...] = 1
@@ -44,6 +45,7 @@ trueMaze[0,0] = 3
 trueMaze[size-1,size-1] = 4
 knowledgeMaze[0,0] = 3
 knowledgeMaze[size-1,size-1] = 4
+
 
 ########## TESTING ##################
 
@@ -73,14 +75,16 @@ else:
     print("invalid option")
 
 
-np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
+directory = os.getcwd() + "\\logs\\"
+
+np.savetxt(directory + '_maze.txt', trueMaze, delimiter=',', fmt='%.0f')
 
 print("true maze: ")
 print(trueMaze)
 
 
-
 plt.imshow(trueMaze, cmap=cmap, norm=norm)
+plt.savefig(directory + "true_maze.jpg")
 plt.show()
 
 
@@ -88,11 +92,13 @@ print("answer: ")
 print(path)
 
 plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
+plt.savefig(directory + "blank.jpg")
 plt.show()
 
 # DISPLAY PARTIAL PATHS
 for index, partial in enumerate(path[0]):
     pathMaze = tracePath(path[1][index], partial)
     plt.imshow(pathMaze, cmap=cmap, norm=norm)
+    plt.savefig(directory + "partial_maze_" + str(index+1) + ".jpg")
     plt.show()
 

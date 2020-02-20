@@ -44,6 +44,6 @@ def text_to_array():
     return array2d
 
 if __name__ == "__main__":
-    # text_to_array()
+    text_to_array()
     # generate_mazes(10, 0.7, "forwards")
-    pass
+    # pass
