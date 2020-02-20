@@ -56,8 +56,4 @@ def generateDownCoordinates(currentCoordinates):
 
 
 def isValidCoordinate(currentCoordinates, sizeOfGrid):
-    return 0<=currentCoordinates[0]<=sizeOfGrid-1 and 0<=currentCoordinates[1]<=sizeOfGrid-1
-
-    
-    
-    
+    return 0<=currentCoordinates[0]<=sizeOfGrid-1 and 0<=currentCoordinates[1]<=sizeOfGrid-1    

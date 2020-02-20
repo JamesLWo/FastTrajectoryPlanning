@@ -6,13 +6,27 @@ import adaptiveAStar
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
+
+def tracePath(maze, path):
+    for coordinate in path:
+        maze[coordinate] = 5
+    return maze
+
+
+#### CONFIGURATION ####
+random.seed(2)
 np.set_printoptions(threshold=np.inf)
 
-# PARAMETERS ######
-size = 101
+color_set = ['white', 'black', 'green', 'red', 'yellow']
+range_set = np.array([-0.5,0.5,2.5,3.5,4.5,5.5])
+
+cmap = colors.ListedColormap(color_set)
+norm = colors.BoundaryNorm(range_set, len(color_set))
+
+#### PARAMETERS #####
+size = 10
 probability = 0.7
 method = "forwards"
-###################
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
@@ -31,19 +45,6 @@ trueMaze[size-1,size-1] = 4
 knowledgeMaze[0,0] = 3
 knowledgeMaze[size-1,size-1] = 4
 
-
-# OPTIONAL EDGE CASES
-
-# block corner - backwards
-# trueMaze[0,1] = 1
-# trueMaze[1,0] = 1
-
-np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
-
-print("true maze: ")
-print(trueMaze)
-
-
 ########## TESTING ##################
 
 if(method == "forwards"):
@@ -55,6 +56,11 @@ if(method == "forwards"):
     path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size)
 
 elif(method == "backwards"):
+    trueMaze[0,0] = 4
+    trueMaze[size-1,size-1] = 3
+    knowledgeMaze[0,0] = 4
+    knowledgeMaze[size-1,size-1] = 3
+
     if trueMaze[size-2,size-1] == 1:
         knowledgeMaze[size-2,size-1] = 1
     if trueMaze[size-1,size-2] == 1:
@@ -67,5 +73,30 @@ else:
     print("invalid option")
 
 
+np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
+
+print("true maze: ")
+print(trueMaze)
+
+
+
+plt.imshow(trueMaze, cmap=cmap, norm=norm)
+plt.waitforbuttonpress(1)
+plt.close()
+
+
+
 print("answer: ")
 print(path)
+
+plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
+plt.waitforbuttonpress(1)
+plt.close()
+
+# DISPLAY PARTIAL PATHS
+for index, partial in enumerate(path[0]):
+    pathMaze = tracePath(path[1][index], partial)
+    plt.imshow(pathMaze, cmap=cmap, norm=norm)
+    plt.waitforbuttonpress(1)
+    plt.close()
+
