@@ -5,7 +5,6 @@ import repeatedAStar
 import adaptiveAStar
 import matplotlib.pyplot as plt
 from matplotlib import colors
-import pandas as pd
 
 
 def tracePath(maze, path):

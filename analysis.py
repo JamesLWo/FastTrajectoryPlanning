@@ -1,10 +1,32 @@
 import os
-import matplotlib.pyplot as plt
 import numpy as np
+import random
+import matplotlib.pyplot as plt
 from matplotlib import colors
 
+def generate_mazes(size, probability, method):
+    directory = os.getcwd() + "\\maze_repo\\"
+    np.set_printoptions(threshold=np.inf)
 
-def generate_maze():
+    for i in range(50):
+        maze = np.zeros(shape = (size,size)).astype(int)
+        for x in np.nditer(maze, op_flags=['readwrite']):
+            if random.random() >= probability:
+                x[...] = 1
+            else:
+                x[...] = 0
+
+        if method == "forwards":
+            maze[0,0] = 3
+            maze[size-1, size-1] = 4
+        elif method == "backwards":
+            maze[0,0] = 4
+            maze[size-1, size-1] = 3
+
+        np.savetxt(directory+'test' + str(i+1) + '.txt', maze, delimiter=',', fmt='%.0f')
+
+
+def text_to_array():
     filename = os.getcwd() + "\\test.txt"
     
     with open(filename) as file:
@@ -22,4 +44,6 @@ def generate_maze():
     return array2d
 
 if __name__ == "__main__":
-    generate_maze()
+    # text_to_array()
+    # generate_mazes(10, 0.7, "forwards")
+    pass
