@@ -23,7 +23,7 @@ def generate_mazes(size, probability, method):
             maze[0,0] = 4
             maze[size-1, size-1] = 3
 
-        np.savetxt(directory+'test' + str(i+1) + '.txt', maze, delimiter=',', fmt='%.0f')
+        np.savetxt(directory+'test{}.txt'.format(i+1), maze, delimiter=',', fmt='%.0f')
 
 
 def text_to_array():

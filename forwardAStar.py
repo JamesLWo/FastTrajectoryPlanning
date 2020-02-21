@@ -1,7 +1,7 @@
 from Node import Node
 import heapq
 import math
-def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numberOfExpandedNodes):
+def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numberOfExpandedNodes, console):
     openList = [] #heap
     closedList = []
     numberOfExpandedNodes = 0
@@ -23,7 +23,8 @@ def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numb
                 if not(inClosed(coordinate, closedList)) and inOpen(coordinate, openList) == -1:
                     heapq.heappush(openList, Node(coordinate, poppedNode, poppedNode.gvalue + 1, getManhattanDistance(coordinate, endingCoordinates)))
                     numberOfExpandedNodes = numberOfExpandedNodes + 1
-                    print(numberOfExpandedNodes)
+                    if console:
+                        print(numberOfExpandedNodes)
                 #if the neighbor has valid cooridnates and is not in closed list but is in open list
                 elif not(inClosed(coordinate, closedList)) and inOpen(coordinate, openList) != -1:
                     #check if current distance can be improved

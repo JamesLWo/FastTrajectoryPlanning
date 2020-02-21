@@ -1,12 +1,11 @@
 import numpy as np
-import random
-import repeatedAStar
-# import repeatedBackwardsAStar
-import adaptiveAStar
 import matplotlib.pyplot as plt
-from matplotlib import colors
+import matplotlib.colors as colors
+import random
 import os
-
+import time
+import repeatedAStar
+import adaptiveAStar
 
 def tracePath(maze, path):
     for coordinate in path:
@@ -15,7 +14,7 @@ def tracePath(maze, path):
 
 
 #### CONFIGURATION ####
-# random.seed(2)
+random.seed(122)
 np.set_printoptions(threshold=np.inf)
 
 color_set = ['white', 'black', 'green', 'red', 'yellow']
@@ -23,6 +22,8 @@ range_set = np.array([-0.5,0.5,2.5,3.5,4.5,5.5])
 
 cmap = colors.ListedColormap(color_set)
 norm = colors.BoundaryNorm(range_set, len(color_set))
+
+console = False
 
 #### PARAMETERS #####
 size = 101
@@ -49,13 +50,15 @@ knowledgeMaze[size-1,size-1] = 4
 
 ########## TESTING ##################
 
+start_time = time.time()
+
 if(method == "forwards"):
     # give knowledge maze initial knowledge
     if trueMaze[1,0] == 1:
         knowledgeMaze[1,0] = 1
     if trueMaze[0,1] == 1:
         knowledgeMaze[0,1] = 1
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size)
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console)
 
 elif(method == "backwards"):
     trueMaze[0,0] = 4
@@ -67,38 +70,49 @@ elif(method == "backwards"):
         knowledgeMaze[size-2,size-1] = 1
     if trueMaze[size-1,size-2] == 1:
         knowledgeMaze[size-1,size-2] = 1
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size)
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console)
 
 elif(method == "adaptive"):
-    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1))
+    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1), console)
 else:
     print("invalid option")
+
+end_time = time.time()
 
 
 directory = os.getcwd() + "\\logs\\"
 
+# delete all files in log directory
+list(map(os.unlink, (os.path.join(directory,f) for f in os.listdir(directory))))
+
 np.savetxt(directory + '_maze.txt', trueMaze, delimiter=',', fmt='%.0f')
 
-print("true maze: ")
-print(trueMaze)
-
+if console:
+    print("true maze: ")
+    print(trueMaze)
 
 plt.imshow(trueMaze, cmap=cmap, norm=norm)
 plt.savefig(directory + "true_maze.jpg")
-plt.show()
+# plt.show()
+plt.close()
 
-
-print("answer: ")
-print(path)
+if console:
+    print("answer: ")
+    print(path)
 
 plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
 plt.savefig(directory + "blank.jpg")
-plt.show()
+# plt.show()
+plt.close()
 
 # DISPLAY PARTIAL PATHS
 for index, partial in enumerate(path[0]):
     pathMaze = tracePath(path[1][index], partial)
     plt.imshow(pathMaze, cmap=cmap, norm=norm)
-    plt.savefig(directory + "partial_maze_" + str(index+1) + ".jpg")
-    plt.show()
+    plt.savefig(directory + "partial_maze_{}".format(index+1) + ".jpg")
+    # plt.show()
+    plt.close()
 
+final_time = time.time()
+
+print(final_time - start_time)
