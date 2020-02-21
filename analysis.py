@@ -43,7 +43,24 @@ def text_to_array():
 
     return array2d
 
+def clear_dir(folder):
+    if folder == "logs":
+        subdir = "\\logs\\"
+    elif folder == "mazes":
+        subdir = "\\maze_repo\\"
+    elif folder == "cache":
+        subdir = "\\__pycache__\\"
+    else:
+        print("invalid option")
+        return
+        
+        
+    directory = os.getcwd() + subdir
+    
+    list(map(os.unlink, (os.path.join(directory,f) for f in os.listdir(directory))))
+
 if __name__ == "__main__":
-    text_to_array()
+    # clear_dir("cache")
+    # text_to_array()
     # generate_mazes(10, 0.7, "forwards")
-    # pass
+    pass
