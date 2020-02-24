@@ -1,24 +1,40 @@
 import numpy as np
-import random
-import repeatedAStar
-# import repeatedBackwardsAStar
-import adaptiveAStar
 import matplotlib.pyplot as plt
-from matplotlib import colors
+import matplotlib.colors as colors
+import random
+import os
+import time
+import repeatedAStar
+import adaptiveAStar
 
+def tracePath(maze, path):
+    for coordinate in path:
+        maze[coordinate] = 5
+    return maze
+
+
+#### CONFIGURATION ####
+random.seed(122)
 np.set_printoptions(threshold=np.inf)
 
-# PARAMETERS ######
+color_set = ['white', 'black', 'green', 'red', 'yellow']
+range_set = np.array([-0.5,0.5,2.5,3.5,4.5,5.5])
+
+cmap = colors.ListedColormap(color_set)
+norm = colors.BoundaryNorm(range_set, len(color_set))
+
+console = False
+
+#### PARAMETERS #####
 size = 101
 probability = 0.7
-method = "forwards"
-###################
+method = "backwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
 knowledgeMaze = np.zeros(shape = (size,size)).astype(int)
 
-#populate actual maze
+# populate actual maze
 for x in np.nditer(trueMaze, op_flags=['readwrite']):
     if random.random() >= probability:
         x[...] = 1
@@ -32,36 +48,71 @@ knowledgeMaze[0,0] = 3
 knowledgeMaze[size-1,size-1] = 4
 
 
-# OPTIONAL EDGE CASES
-
-# block corner - backwards
-# trueMaze[0,1] = 1
-# trueMaze[1,0] = 1
-
-
-# give knowledge maze initial knowledge
-if trueMaze[1,0] == 1:
-    knowledgeMaze[1,0] = 1
-if trueMaze[0,1] == 1:
-    knowledgeMaze[0,1] = 1
-
-np.savetxt('test.txt', trueMaze, delimiter=',', fmt='%.0f')
-
-print("true maze: ")
-print(trueMaze)
-
-
 ########## TESTING ##################
 
+start_time = time.time()
+
 if(method == "forwards"):
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size) 
+    # give knowledge maze initial knowledge
+    if trueMaze[1,0] == 1:
+        knowledgeMaze[1,0] = 1
+    if trueMaze[0,1] == 1:
+        knowledgeMaze[0,1] = 1
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console)
+
 elif(method == "backwards"):
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size)
+    trueMaze[0,0] = 4
+    trueMaze[size-1,size-1] = 3
+    knowledgeMaze[0,0] = 4
+    knowledgeMaze[size-1,size-1] = 3
+
+    if trueMaze[size-2,size-1] == 1:
+        knowledgeMaze[size-2,size-1] = 1
+    if trueMaze[size-1,size-2] == 1:
+        knowledgeMaze[size-1,size-2] = 1
+    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console)
+
 elif(method == "adaptive"):
-    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1))
+    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1), console)
 else:
     print("invalid option")
 
+end_time = time.time()
 
-print("answer: ")
-print(path)
+
+directory = os.getcwd() + "\\logs\\"
+
+# delete all files in log directory
+list(map(os.unlink, (os.path.join(directory,f) for f in os.listdir(directory))))
+
+np.savetxt(directory + '_maze.txt', trueMaze, delimiter=',', fmt='%.0f')
+
+if console:
+    print("true maze: ")
+    print(trueMaze)
+
+plt.imshow(trueMaze, cmap=cmap, norm=norm)
+plt.savefig(directory + "true_maze.jpg")
+# plt.show()
+plt.close()
+
+if console:
+    print("answer: ")
+    print(path)
+
+plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
+plt.savefig(directory + "blank.jpg")
+# plt.show()
+plt.close()
+
+# DISPLAY PARTIAL PATHS
+for index, partial in enumerate(path[0]):
+    pathMaze = tracePath(path[1][index], partial)
+    plt.imshow(pathMaze, cmap=cmap, norm=norm)
+    plt.savefig(directory + "partial_maze_{}".format(index+1) + ".jpg")
+    # plt.show()
+    plt.close()
+
+final_time = time.time()
+
+print(final_time - start_time)

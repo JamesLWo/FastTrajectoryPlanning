@@ -1,3 +1,3 @@
-def adpativeAStar(maze, beginningCoordinates, endingCoordinates):
+def adpativeAStar(maze, beginningCoordinates, endingCoordinates, console):
     plannedPath = []
     return plannedPath
