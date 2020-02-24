@@ -16,7 +16,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         print(currentPath)
         plannedPaths.append(currentPath)
         if currentPath == []:
-            return [plannedPaths, knowledgeMazes]
+            return [[], knowledgeMazes]
         #execute
         #step through planned path
         #if current node is actually an obstacle, stop there and save that coordinate as the beginning coordinate for next iteration

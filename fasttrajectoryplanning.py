@@ -9,7 +9,7 @@ from matplotlib import colors
 np.set_printoptions(threshold=np.inf)
 
 # PARAMETERS ######
-size = 10
+size = 101
 probability = 0.7
 method = "forwards"
 ###################
