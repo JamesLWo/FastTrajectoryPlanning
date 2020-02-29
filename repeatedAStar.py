@@ -30,7 +30,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
                 #update beginning to coordinates right before obstacle bump
                 beginning = currentPath[index-1]
                 break
-            if w == endingCoordinates: #if the path executed actually makes it to the end, we're done
+            if w == (sizeOfGrid-1,sizeOfGrid-1): #if the path executed actually makes it to the end, we're done
                 return [plannedPaths,knowledgeMazes]
             neighbors = [] #generate all neighbors
             currentCoordinate = currentPath[index]
