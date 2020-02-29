@@ -8,17 +8,22 @@ import repeatedAStar
 import adaptiveAStar
 
 def tracePath(maze, path):
+    first = True
     for coordinate in path:
-        maze[coordinate] = 5
+        if first:
+            maze[coordinate] = 6
+            first = False
+        else:
+            maze[coordinate] = 5
+        
     return maze
-
 
 #### CONFIGURATION ####
 random.seed(122)
 np.set_printoptions(threshold=np.inf)
 
-color_set = ['white', 'black', 'green', 'red', 'yellow']
-range_set = np.array([-0.5,0.5,2.5,3.5,4.5,5.5])
+color_set = ['white', 'black', 'green', 'red', 'yellow', 'orange']
+range_set = np.array([-0.5,0.5,2.5,3.5,4.5,5.5,6.5])
 
 cmap = colors.ListedColormap(color_set)
 norm = colors.BoundaryNorm(range_set, len(color_set))
@@ -26,7 +31,7 @@ norm = colors.BoundaryNorm(range_set, len(color_set))
 console = False
 
 #### PARAMETERS #####
-size = 101
+size = 20
 probability = 0.7
 method = "forwards"
 
@@ -61,15 +66,6 @@ if(method == "forwards"):
     path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console)
 
 elif(method == "backwards"):
-    trueMaze[0,0] = 4
-    trueMaze[size-1,size-1] = 3
-    knowledgeMaze[0,0] = 4
-    knowledgeMaze[size-1,size-1] = 3
-
-    if trueMaze[size-2,size-1] == 1:
-        knowledgeMaze[size-2,size-1] = 1
-    if trueMaze[size-1,size-2] == 1:
-        knowledgeMaze[size-1,size-2] = 1
     path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console)
 
 elif(method == "adaptive"):
@@ -78,7 +74,6 @@ else:
     print("invalid option")
 
 end_time = time.time()
-
 
 directory = os.getcwd() + "//logs//"
 
