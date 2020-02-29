@@ -1,6 +1,6 @@
 import forwardAStar
 import numpy as np
-def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates, sizeOfGrid, console):
+def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinates, sizeOfGrid, console, backwards):
     plannedPaths = []
     knowledgeMazes = []
     numberOfExpandedNodes = 0
@@ -11,7 +11,8 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
     while True:
         #planning
         knowledgeMazes.append(currentKnowledgeMaze)
-        currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, numberOfExpandedNodes, console)
+        currentPath = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, numberOfExpandedNodes, console, backwards)
+        # print(currentPath)
         if(console):
             print("current path")
             print(currentPath)
@@ -25,12 +26,18 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
         #otherwise, look at neighbors of the current node and see if they are obstacles in true maze. if so, plot these obstacles in the knowledge maze and insert updated knowledge maze
         currentKnowledgeMaze = np.copy(knowledgeMazes[-1])
 
+        print(currentPath + ["hi"])
+
         for index, w in enumerate(currentPath):
             if trueMaze[w[0]][w[1]] == 1:
                 #update beginning to coordinates right before obstacle bump
-                beginning = currentPath[index-1]
+                if backwards:
+                    ending = currentPath[index-1]
+                else:
+                    beginning = currentPath[index-1]
                 break
-            if w == endingCoordinates: #if the path executed actually makes it to the end, we're done
+            print(w)
+            if w == (sizeOfGrid-1, sizeOfGrid-1): #if the path executed actually makes it to the end, we're done
                 return [plannedPaths,knowledgeMazes]
             neighbors = [] #generate all neighbors
             currentCoordinate = currentPath[index]
