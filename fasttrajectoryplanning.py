@@ -28,7 +28,7 @@ console = False
 #### PARAMETERS #####
 size = 101
 probability = 0.7
-method = "backwards"
+method = "forwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
