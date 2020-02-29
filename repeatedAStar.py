@@ -36,8 +36,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
                 else:
                     beginning = currentPath[index-1]
                 break
-            print(w)
-            if w == (sizeOfGrid-1, sizeOfGrid-1): #if the path executed actually makes it to the end, we're done
+            if w == (sizeOfGrid-1,sizeOfGrid-1): #if the path executed actually makes it to the end, we're done
                 return [plannedPaths,knowledgeMazes]
             neighbors = [] #generate all neighbors
             currentCoordinate = currentPath[index]

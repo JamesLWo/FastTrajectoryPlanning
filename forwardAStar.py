@@ -51,12 +51,15 @@ def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numb
         plannedPath.reverse()
         return plannedPath
 
-# def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numberOfExpandedNodes, console, goalDistance, prevClosedList):
-#     openList = [] #heap
-#     closedList = []
-#     numberOfExpandedNodes = 0
-#     beginningNode = Node(beginningCoordinates, None, 0, getManhattanDistance(beginningCoordinates, endingCoordinates))
-#     openList.append(beginningNode)
+def forwardAStarAdaptive(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numberOfExpandedNodes, console, goalDistance, prevClosedList):
+    openList = [] #heap
+    closedList = []
+    numberOfExpandedNodes = 0
+
+    for index, w
+
+    beginningNode = Node(beginningCoordinates, None, 0, getManhattanDistance(beginningCoordinates, endingCoordinates))
+    openList.append(beginningNode)
 
 #     while openList[0].coordinates != endingCoordinates: #while first priority node isnt the goal node
 #         poppedNode = heapq.heappop(openList) #remove first priority from open list and add to closed list and expand it
@@ -124,4 +127,9 @@ def inOpen(currentCoordinates, openList):
         if w.coordinates == currentCoordinates:
             return index
 
+    return -1
+def inPrevClosed(currentCoordinates, prevClosedList):
+    for index, w in enumerate(prevClosedList):
+        if w.coordinates = currentCoordinates:
+            return index
     return -1
