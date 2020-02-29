@@ -28,7 +28,7 @@ console = False
 #### PARAMETERS #####
 size = 101
 probability = 0.7
-method = "backwards"
+method = "forwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
@@ -80,7 +80,7 @@ else:
 end_time = time.time()
 
 
-directory = os.getcwd() + "\\logs\\"
+directory = os.getcwd() + "//logs//"
 
 # delete all files in log directory
 list(map(os.unlink, (os.path.join(directory,f) for f in os.listdir(directory))))
@@ -92,7 +92,7 @@ if console:
     print(trueMaze)
 
 plt.imshow(trueMaze, cmap=cmap, norm=norm)
-plt.savefig(directory + "true_maze.jpg")
+plt.savefig(directory + "true_maze.png")
 # plt.show()
 plt.close()
 
@@ -101,7 +101,7 @@ if console:
     print(path)
 
 plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
-plt.savefig(directory + "blank.jpg")
+plt.savefig(directory + "blank.png")
 # plt.show()
 plt.close()
 
@@ -109,10 +109,11 @@ plt.close()
 for index, partial in enumerate(path[0]):
     pathMaze = tracePath(path[1][index], partial)
     plt.imshow(pathMaze, cmap=cmap, norm=norm)
-    plt.savefig(directory + "partial_maze_{}".format(index+1) + ".jpg")
+    plt.savefig(directory + "partial_maze_{}".format(index+1) + ".png")
     # plt.show()
     plt.close()
 
 final_time = time.time()
 
+print(end_time - start_time)
 print(final_time - start_time)
