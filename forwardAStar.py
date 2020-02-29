@@ -1,5 +1,5 @@
 from Node import Node
-import heapq
+import heap as heapq
 import math
 def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, numberOfExpandedNodes, console):
     openList = [] #heap
