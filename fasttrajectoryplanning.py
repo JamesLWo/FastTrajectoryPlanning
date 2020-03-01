@@ -53,6 +53,10 @@ knowledgeMaze[0,0] = 3
 knowledgeMaze[size-1,size-1] = 4
 
 
+if trueMaze[1,0] == 1:
+    knowledgeMaze[1,0] = 1
+if trueMaze[0,1] == 1:
+    knowledgeMaze[0,1] = 1
 ########## TESTING ##################
 
 start_time = time.time()
@@ -63,14 +67,15 @@ if trueMaze[0,1] == 1:
     knowledgeMaze[0,1] = 1
 
 if(method == "forwards"):
-    # give knowledge maze initial knowledge
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console, False)
-
+    path,numexpanded = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console, False)
+    print(numexpanded)
 elif(method == "backwards"):
-    path = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console, True)
+    path,numexpanded= repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console, True)
+    print(numexpanded)
 
 elif(method == "adaptive"):
-    path = adaptiveAStar.adpativeAStar(knowledgeMaze, (0,0), (size-1,size-1), console)
+    path,numexpanded= repeatedAStar.repeatedAStarAdaptive(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console)
+    print(numexpanded)  
 else:
     print("invalid option")
 
@@ -96,8 +101,8 @@ if console:
     print("answer: ")
     print(path)
 
-for path2 in path[0]:
-    print(path2)
+#for path2 in path[0]:
+ #   print(path2)
 
 print(len(path[0]))
 
