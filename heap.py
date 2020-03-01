@@ -10,7 +10,7 @@ def heappop(heap):
         siftup(heap, 0)
         return ret
     return last
-
+ 
 def siftdown(heap, startpos, pos):
     newitem = heap[pos]
     while pos > startpos:

@@ -19,7 +19,7 @@ def tracePath(maze, path):
     return maze
 
 #### CONFIGURATION ####
-random.seed(900)
+random.seed(130)
 np.set_printoptions(threshold=np.inf)
 
 color_set = ['white', 'black', 'green', 'red', 'yellow', 'orange']
@@ -31,9 +31,9 @@ norm = colors.BoundaryNorm(range_set, len(color_set))
 console = False
 
 #### PARAMETERS #####
-size = 101
+size = 10
 probability = 0.7
-method = "forwards"
+method = "adaptive"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
