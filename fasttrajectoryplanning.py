@@ -61,6 +61,11 @@ if trueMaze[0,1] == 1:
 
 start_time = time.time()
 
+if trueMaze[1,0] == 1:
+        knowledgeMaze[1,0] = 1
+if trueMaze[0,1] == 1:
+    knowledgeMaze[0,1] = 1
+
 if(method == "forwards"):
     path,numexpanded = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console, False)
     print(numexpanded)
@@ -98,6 +103,9 @@ if console:
 
 #for path2 in path[0]:
  #   print(path2)
+
+print(len(path[0]))
+
 
 plt.imshow(knowledgeMaze, cmap=cmap, norm=norm)
 plt.savefig(directory + "blank.png")
