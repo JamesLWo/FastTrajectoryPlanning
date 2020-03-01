@@ -35,7 +35,7 @@ def forwardAStar(maze, beginningCoordinates, endingCoordinates, sizeOfGrid, cons
                         openList[inOpen(coordinate, openList)].fvalue = poppedNode.gvalue + 1 + getManhattanDistance(coordinate, endingCoordinates)
                         openList[inOpen(coordinate, openList)].parent = poppedNode
         if len(openList) == 0:
-            return []
+            return [], numberOfExpandedNodes
     
     
     plannedPath = []
@@ -57,7 +57,8 @@ def forwardAStarAdaptive(maze, beginningCoordinates, endingCoordinates, sizeOfGr
     numberOfExpandedNodes = 0
 
     for index, w in enumerate(prevClosedList):
-        prevClosedList[index].hvalue = goalDistance - prevClosedList[index].gvalue
+        w.hvalue = goalDistance - prevClosedList[index].gvalue
+        #prevClosedList[index] = Node(prevClosedList[index].coordinates, None, 0, goalDistance - prevClosedList[index].gvalue)
 
     beginningNode = Node(beginningCoordinates, None, 0, getManhattanDistance(beginningCoordinates, endingCoordinates))
     if(inPrevClosed(beginningCoordinates, prevClosedList)!= -1):
@@ -80,7 +81,7 @@ def forwardAStarAdaptive(maze, beginningCoordinates, endingCoordinates, sizeOfGr
             if isValidCoordinate(coordinate, maze, sizeOfGrid):
                 #if the neighbor has valid coordinates and is not in closed list or in the open list, add that node in the open list
                 if not(inClosed(coordinate, closedList)) and inOpen(coordinate, openList) == -1:
-                    if(prevClosedIndex!= -1):
+                    if(prevClosedIndex != -1):
                         heapq.heappush(openList, Node(coordinate, poppedNode, poppedNode.gvalue + 1, prevClosedList[prevClosedIndex].hvalue))
                     else:
                         heapq.heappush(openList, Node(coordinate, poppedNode, poppedNode.gvalue + 1, getManhattanDistance(coordinate, endingCoordinates)))
@@ -102,7 +103,7 @@ def forwardAStarAdaptive(maze, beginningCoordinates, endingCoordinates, sizeOfGr
                         openList[inOpen(coordinate, openList)].fvalue = poppedNode.gvalue + 1 + getManhattanDistance(coordinate, endingCoordinates)
                         openList[inOpen(coordinate, openList)].parent = poppedNode
         if len(openList) == 0:
-            return []
+            return [],numberOfExpandedNodes,closedList,0
     
     
     plannedPath = []
@@ -113,7 +114,7 @@ def forwardAStarAdaptive(maze, beginningCoordinates, endingCoordinates, sizeOfGr
         currentNode = currentNode.parent
     #return planned path
     plannedPath.reverse()
-    return plannedPath,numberOfExpandedNodes,closedList,len(plannedPath)
+    return plannedPath,numberOfExpandedNodes,closedList,(len(plannedPath)-1)
 def generateLeftCoordinates(currentCoordinates):
     return (currentCoordinates[0]-1, currentCoordinates[1])
 def generateRightCoordinates(currentCoordinates):

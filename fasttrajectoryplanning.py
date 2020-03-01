@@ -19,7 +19,7 @@ def tracePath(maze, path):
     return maze
 
 #### CONFIGURATION ####
-random.seed(760)
+random.seed(900)
 np.set_printoptions(threshold=np.inf)
 
 color_set = ['white', 'black', 'green', 'red', 'yellow', 'orange']
@@ -33,7 +33,7 @@ console = False
 #### PARAMETERS #####
 size = 101
 probability = 0.7
-method = "adaptive"
+method = "forwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
@@ -53,36 +53,24 @@ knowledgeMaze[0,0] = 3
 knowledgeMaze[size-1,size-1] = 4
 
 
+if trueMaze[1,0] == 1:
+    knowledgeMaze[1,0] = 1
+if trueMaze[0,1] == 1:
+    knowledgeMaze[0,1] = 1
 ########## TESTING ##################
 
 start_time = time.time()
 
 if(method == "forwards"):
-    # give knowledge maze initial knowledge
-    if trueMaze[1,0] == 1:
-        knowledgeMaze[1,0] = 1
-    if trueMaze[0,1] == 1:
-        knowledgeMaze[0,1] = 1
     path,numexpanded = repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console, False)
     print(numexpanded)
-
 elif(method == "backwards"):
-    if trueMaze[1,0] == 1:
-        knowledgeMaze[1,0] = 1
-    if trueMaze[0,1] == 1:
-        knowledgeMaze[0,1] = 1
     path,numexpanded= repeatedAStar.repeatedAStar(knowledgeMaze, trueMaze, (size-1, size-1), (0,0), size, console, True)
     print(numexpanded)
 
-
 elif(method == "adaptive"):
-    if trueMaze[1,0] == 1:
-        knowledgeMaze[1,0] = 1
-    if trueMaze[0,1] == 1:
-        knowledgeMaze[0,1] = 1
     path,numexpanded= repeatedAStar.repeatedAStarAdaptive(knowledgeMaze, trueMaze, (0,0), (size-1,size-1), size, console)
-    print(numexpanded)
-    
+    print(numexpanded)  
 else:
     print("invalid option")
 

@@ -11,8 +11,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
     while True:
         #planning
         knowledgeMazes.append(currentKnowledgeMaze)
-        currentPath,_ = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, console, backwards)
-        _,numberOfExpandedNodes = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, console, backwards)
+        currentPath,numberOfExpandedNodes = forwardAStar.forwardAStar(currentKnowledgeMaze, beginning, ending, sizeOfGrid, console, backwards)
         totalNumberExpanded = totalNumberExpanded + numberOfExpandedNodes
 
         # print(currentPath)
@@ -21,7 +20,7 @@ def repeatedAStar(knowledgeMaze, trueMaze, beginningCoordinates, endingCoordinat
             print(currentPath)
         plannedPaths.append(currentPath)
         if currentPath == []:
-            return [[], knowledgeMazes]
+            return [[],knowledgeMazes], totalNumberExpanded
         #execute
         #step through planned path
         #if current node is actually an obstacle, stop there and save that coordinate as the beginning coordinate for next iteration
@@ -77,7 +76,7 @@ def repeatedAStarAdaptive(knowledgeMaze, trueMaze, beginningCoordinates, endingC
             print(currentPath)
         plannedPaths.append(currentPath)
         if currentPath == []:
-            return [[], knowledgeMazes]
+            return [[], knowledgeMazes], totalNumberExpanded
         #execute
         #step through planned path
         #if current node is actually an obstacle, stop there and save that coordinate as the beginning coordinate for next iteration
