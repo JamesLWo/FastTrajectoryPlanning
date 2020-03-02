@@ -18,7 +18,7 @@ def tracePath(maze, path):
     return maze
 
 #### CONFIGURATION ####
-random.seed(130)
+random.seed(122)
 np.set_printoptions(threshold=np.inf)
 
 color_set = ['white', 'black', 'green', 'red', 'yellow', 'orange']
@@ -30,7 +30,7 @@ norm = colors.BoundaryNorm(range_set, len(color_set))
 console = False
 
 #### PARAMETERS #####
-size = 100
+size = 101
 probability = 0.7
 method = "adaptive"
 
@@ -79,6 +79,7 @@ else:
     print("invalid option")
 
 end_time = time.time()
+print(end_time-start_time)
 
 directory = os.getcwd() + "//logs//"
 
@@ -101,7 +102,7 @@ if console:
     print(path)
 
 #for path2 in path[0]:
- #   print(path2)
+#   print(path2)
 
 print(len(path[0]))
 
@@ -120,5 +121,4 @@ for index, partial in enumerate(path[0]):
     plt.close()
 
 final_time = time.time()
-print(end_time-start_time)
 print(final_time - start_time)
