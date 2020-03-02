@@ -17,6 +17,7 @@ def tracePath(maze, path):
         
     return maze
 
+
 #### CONFIGURATION ####
 random.seed(122)
 np.set_printoptions(threshold=np.inf)
@@ -32,7 +33,7 @@ console = False
 #### PARAMETERS #####
 size = 101
 probability = 0.7
-method = "adaptive"
+method = "forwards"
 
 #create actual maze and knowledge maze
 trueMaze = np.zeros(shape = (size,size)).astype(int)
