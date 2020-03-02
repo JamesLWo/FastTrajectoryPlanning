@@ -30,7 +30,7 @@ norm = colors.BoundaryNorm(range_set, len(color_set))
 console = False
 
 #### PARAMETERS #####
-size = 10
+size = 100
 probability = 0.7
 method = "adaptive"
 
