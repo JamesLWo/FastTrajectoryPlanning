@@ -43,7 +43,7 @@ def get_child(index):
     return 2*index + 1
 
 def get_parent(index):
-    return (index - 1)/2
+    return (index - 1) >> 1
 
 ''' 
 python heapq library implementation courtesy of cpython library
