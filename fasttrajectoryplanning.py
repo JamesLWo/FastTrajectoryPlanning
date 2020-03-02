@@ -5,7 +5,6 @@ import random
 import os
 import time
 import repeatedAStar
-import sys
 
 def tracePath(maze, path):
     first = True
