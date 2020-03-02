@@ -12,6 +12,9 @@ forwardexpand = [9219,10654,7006,8087,9658,13679,8914,9377,9434,11759,8506,6836,
 backwardexpand = [172094,89398,110515,122491,162896,113148,169201,106430,216662,94105,94412,173367,253910,72227,154022,116843,123583,102955,93600,151391,62654,99021,142279,68283,31459,129845,106621,71947,41941,46563,64574,219391,72581,101846,75465,155812,111467,69074,59444,117645,140824,94705,139559,192370,89438,80295,73305,161668,87146,167966]
 adaptiveexpand = [9131,10580,6886,8088,9616,12518,9544,9281,9375,11693,8471,6769,12468,8699,9117,9149,7974,9766,12474,10493,11369,8497,7105,8306,8180,6845,9737,8781,7394,6883,7038,12556,10629,9339,8112,11545,8187,11761,10273,10392,8826,9072,13765,7471,9718,9157,6686,11436,12931,9137]
 
+forward = [9219, 10654, 7006, 8087, 9658, 13679, 8914, 9377, 9343, 8329, 8025, 6905]
+badforward = [290048,294633,193024,152173,317103,203341,260126,276074,358003,364254,257071,239698]
+
 # plt.plot(seeds, forwardexpand, marker='o', markerfacecolor='blue', markersize=4)
 # plt.plot(seeds, backwardexpand)
 # plt.show()
@@ -19,15 +22,15 @@ adaptiveexpand = [9131,10580,6886,8088,9616,12518,9544,9281,9375,11693,8471,6769
 width = 0.8
 
 matplotlib.rc('font', size=12)
-matplotlib.rc('xtick', labelsize=8)
+matplotlib.rc('xtick', labelsize=12)
 
 
-indices = np.arange(len(seeds))
+indices = np.arange(len(forward))
 
-plt.bar(indices, adaptiveexpand, width=width, 
-        color='b', label='Adaptive Nodes Expanded')
-plt.bar([i+0.25*width for i in indices], forwardexpand, 
-        width=0.5*width, color='r', alpha=0.8, label='Forwards Nodes Expanded')
+plt.bar(indices, badforward, width=width, 
+        color='b', label='Smaller G Value')
+plt.bar([i+0.25*width for i in indices], forward, 
+        width=0.5*width, color='r', alpha=0.8, label='Larger G Value')
 
 plt.xticks(indices+width/8., 
            [seeds[i] for i in range(len(seeds))] )
@@ -35,6 +38,5 @@ plt.xticks(indices+width/8.,
 plt.xlabel("Seed Number")
 plt.ylabel("Nodes Expanded")
 
-plt.xticks(rotation=90)
 plt.legend()
 plt.show()
